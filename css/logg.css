@@ -1,0 +1,357 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+HTML {
+  height: 100%;
+  overflow: hidden;
+}
+
+BODY {
+  height: 100%;
+  background-color: #ffffff;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  font-family: Verdana;
+}
+
+BUTTON {
+  height: 3em;
+  width: 80px;
+}
+
+
+
+#BunnskjemaPlaceholder {
+  z-index: 2;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 222px;
+  border-top: 2px solid #bf0000;
+  height: 90px;
+  background-image: url('/grafikk/placeholder-bg.jpg');
+  background-repeat: repeat;
+}
+
+#Bunnskjema {
+  z-index: 12;
+  display: none;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 222px;
+  border-top: 2px solid #bf0000;
+  background: silver;
+  padding: 4px;
+  height: 82px;
+}
+
+
+
+#ListeTopp {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 222px;
+  height: 22px;
+  /*background-color: silver;*/
+  background-color: #bf0000;
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+}
+
+#ListeTopp SPAN {
+  margin: 0px;
+  border-right: 2px solid white;
+  font-size: 12px;
+  font: Verdana;
+  padding: 2px 0px 2px 0px;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  font-weight: bold;
+  float: left;
+  height: 22px;
+}
+
+#ListeTopp SPAN.KolonneNr {
+  width: 60px;
+}
+
+#ListeTopp SPAN.KolonneDTG {
+  width: 90px;
+}
+
+#ListeTopp SPAN.KolonneFra {
+  width: 100px;
+}
+
+#ListeTopp SPAN.KolonneTil {
+  width: 100px;
+}
+
+#ListeTopp SPAN.KolonneMelding {
+  width: auto;
+  border: 0px;
+  padding-left: 10px;
+}
+
+
+
+#Sideinnhold {
+  position: fixed;
+  z-index: 0;
+  top: 22px;
+  left: 0px;
+  right: 222px;
+  bottom: 92px;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+
+#SideMeny {
+  z-index: 11;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  background-color: #f2f2f2;
+  width: 220px;
+  height: 34px;
+  border-left: 2px solid #bf0000;
+}
+
+#SideMeny DIV.Liste {
+  display: block;
+  text-align: center;
+  padding: 4px;
+}
+
+#SideMeny DIV.Knapper {
+  display: block;
+  text-align: center;
+  padding: 4px;
+}
+
+#SideMeny BUTTON {
+  height: 20px;
+  width: 20px;
+}
+
+
+
+#SideKlokke {
+  z-index: 12;
+  position: absolute;
+  top: 34px;
+  right: 0px;
+  width: 220px;
+  height: 76px;
+  text-align: center;
+  background-color: #bf0000;
+  color: white;
+  font-family: 'Courier new';
+  font-weight: bold;
+  border-left: 2px solid #bf0000;
+}
+
+#KlokkeTid {
+  font-size: 30pt;
+}
+
+#KlokkeDato {
+  font-size: 12pt;
+}
+
+
+
+#SideLagslistePlaceholder {
+  z-index: 3;
+  position: absolute;
+  right: 0px;
+  top: 110px;
+  bottom: 92px;
+  font-size: 12px;
+  width: 220px;
+  border-left: 2px solid #bf0000;
+  background-image: url('/grafikk/placeholder-bg.jpg');
+  background-repeat: repeat;
+}
+
+#SideLagsliste {
+  z-index: 13;
+  display: none;
+  position: absolute;
+  right: 0px;
+  top: 110px;
+  bottom: 92px;
+  padding: 0px;
+  font-size: 12px;
+  width: 220px;
+  background-color: #f2f2f2;
+  overflow-y: auto;
+  overflow-x: none;
+  border-left: 2px solid #bf0000;
+}
+
+DIV.LagsInfo {
+  position: relative;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+DIV.LagsInfo TABLE {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid silver;
+}
+
+DIV.LagsInfo TABLE.LagstatusUkjent {
+  border-left: 4px solid silver;
+}
+
+DIV.LagsInfo TABLE.LagstatusLedig {
+  border-left: 4px solid green;
+}
+
+DIV.LagsInfo TABLE.LagstatusTransport {
+  border-left: 4px solid blue;
+}
+
+DIV.LagsInfo TABLE.LagstatusOpptatt {
+  border-left: 4px solid red;
+}
+
+DIV.LagsInfo TABLE.LagstatusPause {
+  border-left: 4px solid yellow;
+}
+
+DIV.LagsInfo TD {
+  padding: 1px;
+}
+
+DIV.LagsInfo TD:first {
+  height: 24px;
+}
+
+DIV.LagsInfo TD.Kallesignal {
+  width: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+DIV.LagsInfo TD.Tid {
+  width: 50px;
+  text-align: right;
+  color: gray;
+  padding-right: 5px;
+  vertical-align: middle;
+  font-size: 10px;
+}
+
+DIV.LagsInfo TD.Deltakere {
+  font-size: 10px;
+}
+
+
+
+#SideLogo {
+  position: fixed;
+  background-color: white;
+  right: 0px;
+  width: 220px;
+  bottom: 0px;
+  height: 90px;
+  border-top: 2px solid #bf0000;
+  border-left: 2px solid #bf0000;
+}
+
+
+
+
+#ListeLogglinjer {
+  padding: 0px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+
+#ListeLogglinjer TR {
+  background-color: #fff;
+}
+
+#ListeLogglinjer TR.Odd {
+  background-color: #e3e5f4;
+}
+
+
+#ListeLogglinjer TD {
+  padding: 1px 0px 2px 0px;
+  vertical-align: top;
+  text-align: center;
+  border-right: 2px solid silver;
+}
+
+#ListeLogglinjer TD.KolonneNr {
+  width: 60px;
+  color: gray;
+}
+
+#ListeLogglinjer TD.KolonneDTG {
+  width: 90px;
+}
+
+#ListeLogglinjer TD.KolonneFra {
+  width: 100px;
+}
+
+#ListeLogglinjer TD.KolonneTil {
+  width: 100px;
+}
+
+#ListeLogglinjer TD.KolonneMelding {
+  padding-left: 10px;
+  text-align: left;
+  border: 0px;
+}
+
+
+
+LABEL {
+  width: 130px;
+  padding-right: 20px;
+  font-weight: bold;
+  text-align: right;
+  display: block;
+  float: left;
+}
+
+#Skjema TD {
+  vertical-align: top;
+}
+
+#Skjema .LoggBoks {
+  padding: 4px;
+  background-color: white;
+  margin: 2px;
+  font-size: 1em;
+  vertical-align: center;
+}
+
+#Skjema INPUT {
+  font-size: 1.2em;
+  text-align: center;
+  padding: 2px;
+}
+
+#Skjema TEXTAREA {
+  font-size: 1.2em;
+  padding: 2px;
+}
