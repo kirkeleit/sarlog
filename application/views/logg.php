@@ -11,7 +11,7 @@
   <script src="/js/jquery-ui-1.10.3.custom.js"></script>
   <script type="text/javascript">
     var HjemAdresse = "http://www.sarlog.net/";
-    var APIServer = "http://dev3.sarlog.net/";
+    var APIServer = document.URL;
     var LoggID = 0;
     var LoggtypeID = 0;
     var AktivitetID = 0;
