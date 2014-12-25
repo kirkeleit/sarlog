@@ -3,7 +3,7 @@
   class Logg_modell extends CI_Model {
 
     function nylogg($data) {
-      $this->db->query("INSERT INTO logger (AktivitetID,LoggtypeID,DatoRegistrert,DatoEndret,Kallesignal) VALUES (".$data['AktivitetID'].",".$data['LoggtypeID'].",Now(),Now(),'".$data['Kallesignal']."')");
+      $this->db->query("INSERT INTO logger (LoggtypeID,DatoRegistrert,DatoEndret,Kallesignal) VALUES (".$data['LoggtypeID'].",Now(),Now(),'".$data['Kallesignal']."')");
       $LoggID = $this->db->insert_id();
       $this->db->query("INSERT INTO logglinjer (LoggID,LinjetypeID,DatoRegistrert,DatoMelding,Melding) VALUES (".$LoggID.",0,Now(),Now(),'Opprettet logg.')");
       //$qlagsliste = $this->db->query("SELECT * FROM lag WHERE (Kallesignal='".$data['Kallesignal']."') AND (AktivitetID=".$data['AktivitetID'].") LIMIT 1");
@@ -18,13 +18,12 @@
       foreach ($qlogger->result() as $qlogg) {
         $logg['ID'] = $qlogg->ID;
         if ($qlogg->LoggtypeID == 0) {
-          $logg['Navn'] = "AL/".date("Y",strtotime($qlogg->DatoRegistrert))."-".$logg['ID'];
+          $logg['Navn'] = "AL/".date("d.m.Y",strtotime($qlogg->DatoRegistrert))."/".$logg['ID'];
         } elseif ($qlogg->LoggtypeID == 1) {
-          $logg['Navn'] = "SL/".date("Y",strtotime($qlogg->DatoRegistrert))."-".$logg['ID'];
+          $logg['Navn'] = "SL/".date("d.m.Y",strtotime($qlogg->DatoRegistrert))."/".$logg['ID'];
         } elseif ($qlogg->LoggtypeID == 2) {
-          $logg['Navn'] = "SAN/".date("Y",strtotime($qlogg->DatoRegistrert))."-".$logg['ID'];
+          $logg['Navn'] = "SAN/".date("d.m.Y",strtotime($qlogg->DatoRegistrert))."/".$logg['ID'];
         }
-        $logg['AktivitetID'] = $qlogg->AktivitetID;
         $logg['LoggtypeID'] = $qlogg->LoggtypeID;
         $logg['DatoRegistrert'] = $qlogg->DatoRegistrert;
         $logg['DatoEndret'] = $qlogg->DatoEndret;
@@ -48,7 +47,6 @@
         } elseif ($qlogg->LoggtypeID == 2) {
           $data['Navn'] = "SAN/".date("Y",strtotime($qlogg->DatoRegistrert))."-".$data['ID'];
         }
-        $data['AktivitetID'] = $qlogg->AktivitetID;
         $data['LoggtypeID'] = $qlogg->LoggtypeID;
         $data['Kallesignal'] = $qlogg->Kallesignal;
         return $data;

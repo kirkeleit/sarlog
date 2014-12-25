@@ -5,7 +5,6 @@
     public function nylogg() {
       $this->output->set_header('Access-Control-Allow-Origin: *');
       $this->load->model('Logg_modell');
-      $data['AktivitetID'] = $this->input->post('AktivitetID');
       $data['LoggtypeID'] = $this->input->post('LoggtypeID');
       $data['Kallesignal'] = $this->input->post('Kallesignal');
       $LoggID = $this->Logg_modell->nylogg($data);
