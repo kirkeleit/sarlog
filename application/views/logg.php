@@ -14,7 +14,6 @@
     var APIServer = document.URL;
     var LoggID = 0;
     var LoggtypeID = 0;
-    var AktivitetID = 0;
     var Kallesignal = 0;
     var LogglinjeTidsstempel = 0;
     var LagslisteTidsstempel = 0;
@@ -42,7 +41,6 @@
 	
     function ResetVindu() {
       LoggID = 0;
-      AktivitetID = 0;
       LoggtypeID = 0;
       LogglinjeTidsstempel = 0;
       LagslisteTidsstempel = 0;
@@ -106,10 +104,9 @@
       if (LoggID > 0) {
         $.getJSON(APIServer+"api.php/logg/loggdata?loggid="+LoggID+"&uts="+new Date().getTime(), function(data) {
           if (data != null) {
-            AktivitetID = data.AktivitetID;
             LoggtypeID = data.LoggtypeID;
             Kallesignal = data.Kallesignal;
-            document.title = "SARLog3: "+data.Navn;
+            document.title = "SARLog: "+data.Navn;
             OppsettListeTopp();
             OppdaterLoggliste();
             TimerLogglisteID = setInterval("OppdaterLoggliste()", 20000);
@@ -523,13 +520,14 @@
     open: function() {
       $.get(APIServer+"api.php/logg/logger/", function (data) {
         logger = JSON.parse(data);
-        $.each(logger, function(i, logg) {
-          if (logg.AktivitetID == 0) {
-            $("#LoggerListe").append($("<option value=\""+logg.ID+"\">"+logg.Navn+" (uten aktivitet)</option>"));
-          } else {
+        //alert(data);
+        //if (logger.length > 0) {
+          $.each(logger, function(i, logg) {
             $("#LoggerListe").append($("<option value=\""+logg.ID+"\">"+logg.Navn+"</option>"));
-          }
-        });
+          });
+        //} else {
+        //  alert("Fant ingen logger i systemet. Lag ny.");
+        //}
       });
     },
     close: function() {
@@ -541,10 +539,6 @@
 <div id="DialogNyLogg">
 <p>Logger som ikke blir knyttet opp til en aktivitet vil mangle funksjoner ut over vanlig logging da dette er funksjonalitet som lagres på aktiviteter, og ikke logger. Typen logg bestemmer hvilken type informasjon som lagres. Kallesignal er kun relevant til sambandslogger.</p><br />
 <table>
-  <tr>
-    <td>Aktivitet:</td>
-    <td><select name="NyLoggAktivitetID" id="NyLoggAktivitetID"></select></td>
-  </tr>
   <tr>
     <td>Type:</td>
     <td><select name="NyLoggLoggtypeID" id="NyLoggLoggtypeID">
@@ -570,7 +564,6 @@
     buttons: {
       "Opprett": function() {
         var NyLogg = new Object();
-        NyLogg.AktivitetID = $("#NyLoggAktivitetID").val();
         NyLogg.LoggtypeID = $("#NyLoggLoggtypeID").val();
         NyLogg.Kallesignal = $("#NyLoggKallesignal").val();
         var jqxhr = $.post(APIServer+"api.php/logg/nylogg", NyLogg )
@@ -587,17 +580,7 @@
         $(this).dialog("close");
       }
     },
-    open: function() {
-      $("#NyLoggAktivitetID").append($("<option value=\"0\">(ingen aktivitet)</option>"));
-      $.get(APIServer+"api.php/aktivitet/aktiviteter/", function (data) {
-        aktiviteter = JSON.parse(data);
-        $.each(aktiviteter.Aktiviteter, function(i, aktivitet) {
-          $("#NyLoggAktivitetID").append($("<option value=\""+aktivitet.ID+"\">"+aktivitet.Navn+"</option>"));
-        });
-      });
-    },
     close: function() {
-      $("#NyLoggAktivitetID").empty();
       $("#NyLoggKallesignal").val("");
     }
   });
