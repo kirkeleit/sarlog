@@ -6,6 +6,7 @@
       $this->output->set_header('Access-Control-Allow-Origin: *');
       $this->load->model('Logg_modell');
       $data['LoggtypeID'] = $this->input->post('LoggtypeID');
+      $data['Beskrivelse'] = $this->input->post('Beskrivelse');
       $data['Kallesignal'] = $this->input->post('Kallesignal');
       $LoggID = $this->Logg_modell->nylogg($data);
       echo $LoggID;

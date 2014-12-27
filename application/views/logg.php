@@ -523,7 +523,7 @@
         //alert(data);
         //if (logger.length > 0) {
           $.each(logger, function(i, logg) {
-            $("#LoggerListe").append($("<option value=\""+logg.ID+"\">"+logg.Navn+"</option>"));
+            $("#LoggerListe").append($("<option value=\""+logg.ID+"\">"+logg.Navn+": "+logg.Beskrivelse+"</option>"));
           });
         //} else {
         //  alert("Fant ingen logger i systemet. Lag ny.");
@@ -537,7 +537,7 @@
 </script>
 
 <div id="DialogNyLogg">
-<p>Logger som ikke blir knyttet opp til en aktivitet vil mangle funksjoner ut over vanlig logging da dette er funksjonalitet som lagres på aktiviteter, og ikke logger. Typen logg bestemmer hvilken type informasjon som lagres. Kallesignal er kun relevant til sambandslogger.</p><br />
+<p>Typen logg bestemmer hvilken type informasjon som lagres. Kallesignal er kun relevant til sambandslogger.</p><br />
 <table>
   <tr>
     <td>Type:</td>
@@ -546,6 +546,10 @@
       <option value="1">Sambandslogg</option>
       <option value="2">Sanitetslogg</option>
     </select></td>
+  </tr>
+  <tr>
+    <td>Beskrivelse:</td>
+    <td><input type="text" name="NyLoggBeskrivelse" id="NyLoggBeskrivelse" /></td>
   </tr>
   <tr>
     <td>Kallesignal:</td>
@@ -565,6 +569,7 @@
       "Opprett": function() {
         var NyLogg = new Object();
         NyLogg.LoggtypeID = $("#NyLoggLoggtypeID").val();
+        NyLogg.Beskrivelse = $("#NyLoggBeskrivelse").val();
         NyLogg.Kallesignal = $("#NyLoggKallesignal").val();
         var jqxhr = $.post(APIServer+"api.php/logg/nylogg", NyLogg )
           .success(function(data) {

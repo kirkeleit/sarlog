@@ -3,7 +3,7 @@
   class Logg_modell extends CI_Model {
 
     function nylogg($data) {
-      $this->db->query("INSERT INTO logger (LoggtypeID,DatoRegistrert,DatoEndret,Kallesignal) VALUES (".$data['LoggtypeID'].",Now(),Now(),'".$data['Kallesignal']."')");
+      $this->db->query("INSERT INTO logger (LoggtypeID,DatoRegistrert,DatoEndret,Beskrivelse,Kallesignal) VALUES (".$data['LoggtypeID'].",Now(),Now(),'".$data['Beskrivelse']."','".$data['Kallesignal']."')");
       $LoggID = $this->db->insert_id();
       $this->db->query("INSERT INTO logglinjer (LoggID,LinjetypeID,DatoRegistrert,DatoMelding,Melding) VALUES (".$LoggID.",0,Now(),Now(),'Opprettet logg.')");
       //$qlagsliste = $this->db->query("SELECT * FROM lag WHERE (Kallesignal='".$data['Kallesignal']."') AND (AktivitetID=".$data['AktivitetID'].") LIMIT 1");
@@ -24,6 +24,7 @@
         } elseif ($qlogg->LoggtypeID == 2) {
           $logg['Navn'] = "SAN/".date("d.m.Y",strtotime($qlogg->DatoRegistrert))."/".$logg['ID'];
         }
+        $logg['Beskrivelse'] = $qlogg->Beskrivelse;
         $logg['LoggtypeID'] = $qlogg->LoggtypeID;
         $logg['DatoRegistrert'] = $qlogg->DatoRegistrert;
         $logg['DatoEndret'] = $qlogg->DatoEndret;
@@ -48,6 +49,7 @@
           $data['Navn'] = "SAN/".date("Y",strtotime($qlogg->DatoRegistrert))."-".$data['ID'];
         }
         $data['LoggtypeID'] = $qlogg->LoggtypeID;
+        $data['Beskrivelse'] = $qlogg->Beskrivelse;
         $data['Kallesignal'] = $qlogg->Kallesignal;
         return $data;
       }
