@@ -5,10 +5,10 @@
   <meta http-equiv="pragma" content="no-cache" />
   <meta charset="utf-8" />
   <title>SARLog3</title>
-  <link rel="stylesheet" type="text/css" href="/css/logg.css" />
-  <link rel="stylesheet" type="text/css" href="/css/smoothness/jquery-ui-1.10.3.custom.css" />
-  <script src="/js/jquery-1.10.2.js"></script>
-  <script src="/js/jquery-ui-1.10.3.custom.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/logg.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/smoothness/jquery-ui-1.10.3.custom.css" />
+  <script src="<?php echo base_url(); ?>js/jquery-1.10.2.js"></script>
+  <script src="<?php echo base_url(); ?>js/jquery-ui-1.10.3.custom.js"></script>
   <script type="text/javascript">
     var HjemAdresse = "http://www.sarlog.net/";
     var APIServer = document.URL;
@@ -314,7 +314,7 @@
       if (LoggID > 0) {
         $.getJSON(APIServer+"api.php/logg/linjer?loggid="+LoggID+"&uts=" + new Date().getTime(), function(data) {
           if (data.Linjer != null) {
-            if (data.DatoSisteMelding > LogglinjeTidsstempel) {
+            //if (data.DatoSisteMelding > LogglinjeTidsstempel) {
               $("#ListeLogglinjer").empty();
 
               $.each(data.Linjer, function(i,linje) {
@@ -345,7 +345,7 @@
               });
               LogglinjeTidsstempel = data.DatoSisteMelding;
               $(".LogglinjeNy").effect("pulsate");
-            }
+            //}
           } else {
             if (data.Linjer == 0) {
               ResetLoggliste();
@@ -497,7 +497,7 @@
 
 
 <div id="DialogApneLogg">
-<p>Velg loggen du ønsker å åpne. Logger uten tilknyttet aktivitet mangler funksjoner ut over logging da dette er funksjonalitet som knyttes til aktiviteter, ikke logger.</p><br />
+<p>Velg loggen du ønsker å åpne.</p><br />
 <select id="LoggerListe"></select>
 </div>
 
