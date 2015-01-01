@@ -2,28 +2,36 @@
 
   class Logg extends CI_Controller {
 
-    public function nylogg() {
+    public function logg_opprett() {
       $this->output->set_header('Access-Control-Allow-Origin: *');
       $this->load->model('Logg_modell');
-      $data['LoggtypeID'] = $this->input->post('LoggtypeID');
+      $data['TypeID'] = $this->input->post('TypeID');
+      $data['Tittel'] = $this->input->post('Tittel');
       $data['Beskrivelse'] = $this->input->post('Beskrivelse');
       $data['Kallesignal'] = $this->input->post('Kallesignal');
-      $LoggID = $this->Logg_modell->nylogg($data);
+      $LoggID = $this->Logg_modell->logg_opprett($data);
       echo $LoggID;
     }
 
-    public function logger() {
+    public function logg_liste() {
       $this->output->set_header('Access-Control-Allow-Origin: *');
       $this->load->model('Logg_modell');
-      $data['data'] = $this->Logg_modell->logger();
+      $data['data'] = $this->Logg_modell->logg_liste();
       $this->load->view('api_json',$data);
     }
 
-    public function loggdata() {
+    public function logg_data() {
       $this->output->set_header('Access-Control-Allow-Origin: *');
       $this->load->model('Logg_modell');
-      $data['data'] = $this->Logg_modell->loggdata($this->input->get('loggid'));
+      $data['data'] = $this->Logg_modell->logg_data($this->input->get('id'));
       $this->load->view('api_json',$data);
+    }
+
+    public function logg_avslutt() {
+      $this->output->set_header('Access-Control-Allow-Origin: *');
+      $this->load->model('Logg_modell');
+      $this->Logg_modell->logg_avslutt($this->input->get('id'));
+      echo $LoggID;
     }
 
     public function linjer() {
@@ -36,11 +44,11 @@
     public function lagrelinje() {
       $this->output->set_header('Access-Control-Allow-Origin: *');
       $this->load->model('Logg_modell');
-      $data['OpprettLag'] = $this->input->post('OpprettLagAutomatisk');
       $data['DTG'] = $this->input->post('DTG');
       $data['Fra'] = $this->input->post('Fra');
       $data['Til'] = $this->input->post('Til');
       $data['Melding'] = $this->input->post('Melding');
+      $data['Ekstra'] = $this->input->post('Ekstra');
       $this->Logg_modell->lagrelinje($this->input->get('loggid'), $data);
       //$this->load->view('api_json');
     }

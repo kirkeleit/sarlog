@@ -49,6 +49,55 @@ BUTTON {
   height: 82px;
 }
 
+#DIVSkjemaTil {
+  position: absolute;
+  /*background: green;*/
+  left: 154px;
+  top: 4px;
+  bottom: 4px;
+  width: 118px;
+  padding: 2px;
+}
+
+#DIVSkjemaFra {
+  position: absolute;
+  /*background: green;*/
+  left: 278px;
+  top: 4px;
+  bottom: 4px;
+  width: 118px;
+  padding: 2px;
+}
+
+#DIVSkjemaMelding0 {
+  position: absolute;
+  /*background: green;*/
+  left: 156px;
+  right: 148px;
+  top: 4px;
+  bottom: 4px;
+  padding: 2px;
+}
+
+#DIVSkjemaMelding1 {
+  position: absolute;
+  /*background: green;*/
+  left: 400px;
+  right: 148px;
+  top: 4px;
+  bottom: 4px;
+  padding: 2px;
+}
+
+#DIVSkjemaKnapp {
+  position: absolute;
+  background: green;
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
+  width: 140px;
+  padding: 0px;
+}
 
 
 #ListeTopp {
@@ -87,17 +136,23 @@ BUTTON {
 }
 
 #ListeTopp SPAN.KolonneFra {
-  width: 100px;
+  width: 120px;
 }
 
 #ListeTopp SPAN.KolonneTil {
-  width: 100px;
+  width: 120px;
 }
 
 #ListeTopp SPAN.KolonneMelding {
   width: auto;
   border: 0px;
   padding-left: 10px;
+}
+
+#ListeTopp SPAN.KolonneEkstra {
+  width: 200px;
+  border-left: 2px solid white;
+  border-right: 0px;
 }
 
 
@@ -309,11 +364,11 @@ DIV.LagsInfo TD.Deltakere {
 }
 
 #ListeLogglinjer TD.KolonneFra {
-  width: 100px;
+  width: 120px;
 }
 
 #ListeLogglinjer TD.KolonneTil {
-  width: 100px;
+  width: 120px;
 }
 
 #ListeLogglinjer TD.KolonneMelding {
