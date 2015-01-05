@@ -1,64 +1,41 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+require_once(APPPATH.'core/loggobject.php');
+require_once(APPPATH.'core/logglinje.php');
+
   class Logg_modell extends CI_Model {
-
-    function logg_opprett($data) {
-      $LoggID = uniqid(rand());
-      $this->db->query("INSERT INTO logger (ID,TypeID,DatoOpprettet,Tittel,Beskrivelse,Kallesignal) VALUES ('".$LoggID."',".$data['TypeID'].",Now(),'".$data['Tittel']."','".$data['Beskrivelse']."','".$data['Kallesignal']."')");
-      $this->db->query("INSERT INTO logglinjer (LoggID,DatoRegistrert,DatoMelding,Melding) VALUES ('".$LoggID."',Now(),Now(),'Opprettet logg ".$LoggID.".')");
-      return $LoggID;
+  	
+	protected $loggTyper = array(0 => "AL", 1 => "SL", 2 => "SAN");
+	
+    function logg_opprett($data) 
+    {
+    	$data["DatoRegistrert"] = $data["DatoMelding"] = $data['DatoOpprettet'] = new DateTime();
+		$logg = new LoggObject(null, $data["TypeID"], $data["DatoOpprettet"], $data["Tittel"], $data["Beskrivelse"], $data["Kallesignal"]);
+	  	$this->db->insert('logger', $logg);
+		$this->db->insert('logglinjer', new LoggLinje($logg->ID));
+		return $logg->ID;
     }
 
-    function logg_liste() {
-      $qlogger = $this->db->query("SELECT * FROM logger ORDER BY ID ASC");
-      foreach ($qlogger->result() as $qlogg) {
-        $logg['ID'] = $qlogg->ID;
-        if ($qlogg->TypeID == 0) {
-          //$logg['Navn'] = "AL/".date("d.m.Y",strtotime($qlogg->DatoRegistrert))."/".$logg['ID'];
-          $logg['Type'] = "AL";
-        } elseif ($qlogg->TypeID == 1) {
-          //$logg['Navn'] = "SL/".date("d.m.Y",strtotime($qlogg->DatoRegistrert))."/".$logg['ID'];
-          $logg['Type'] = "SL";
-        } elseif ($qlogg->TypeID == 2) {
-          //$logg['Navn'] = "SAN/".date("d.m.Y",strtotime($qlogg->DatoRegistrert))."/".$logg['ID'];
-          $logg['Type'] = "SAN";
-        }
-        if ($qlogg->Tittel == "") { $logg['Tittel'] = "Uten navn"; } else { $logg['Tittel'] = $qlogg->Tittel; }
-        if ($qlogg->Beskrivelse == "") { $logg['Beskrivelse'] = "Ingen beskrivelse"; } else { $logg['Beskrivelse'] = $qlogg->Beskrivelse; }
-        $logg['TypeID'] = $qlogg->TypeID;
-        $logg['DatoOpprettet'] = $qlogg->DatoOpprettet;
-        $logg['DatoAvsluttet'] = $qlogg->DatoAvsluttet;
-        $qlinjer = $this->db->query("SELECT * FROM logglinjer WHERE (LoggID='".$qlogg->ID."')");
-        $logg['Linjer'] = $qlinjer->num_rows();
-        unset($qlinjer);
-        $logger[] = $logg;
-        unset($logg);
-      }
-      if (isset($logger)) {
-      return $logger;
-      }
-    }
+    function logg_liste() 
+    {
+    	$logger = array();
+      	$qlogger = $this->db->query("SELECT * FROM logger ORDER BY ID ASC");
+      	foreach ($qlogger->result() as $qlogg) 
+      	{
+			$qlogg->Type = $this->loggTyper[$qlogg->TypeID];
+			$qlogg->Tittel = $qlogg->Tittel ? $qlogg->Tittel : "Uten Navn";
+			$qlogg->Beskrivelse = $qlogg->Beskrivelse ? $qlogg->Beskrivelse : "Ingen beskrivelse";
+			$qlogg->Linjer = $this->db->from("logglinjer")->where("LoggID", $qlogg->ID)->count_all_results();
+    	    $logger[] = (array)$qlogg;
+    	  }
+		return $logger;
+   	 }
 
     function logg_data($LoggID) {
       $qlogger = $this->db->query("SELECT * FROM logger WHERE (ID='".$LoggID."') LIMIT 1");
       if ($qlogg = $qlogger->row()) {
-        $data['ID'] = $qlogg->ID;
-        if ($qlogg->TypeID == 0) {
-          //$data['Navn'] = "AL/".date("Y",strtotime($qlogg->DatoRegistrert))."-".$data['ID'];
-          $data['Type'] = "AL";
-        } elseif ($qlogg->TypeID == 1) {
-          //$data['Navn'] = "SL/".date("Y",strtotime($qlogg->DatoRegistrert))."-".$data['ID'];
-          $data['Type'] = "SL";
-        } elseif ($qlogg->TypeID == 2) {
-          //$data['Navn'] = "SAN/".date("Y",strtotime($qlogg->DatoRegistrert))."-".$data['ID'];
-          $data['Type'] = "SAN";
-        }
-        $data['DatoOpprettet'] = $qlogg->DatoOpprettet;
-        $data['DatoAvsluttet'] = $qlogg->DatoAvsluttet;
-        $data['TypeID'] = $qlogg->TypeID;
-        $data['Tittel'] = $qlogg->Tittel;
-        $data['Beskrivelse'] = $qlogg->Beskrivelse;
-        $data['Kallesignal'] = $qlogg->Kallesignal;
+		$data = (array) $qlogg;
+		$data['Type'] = $this->loggTyper[$qlogg->TypeID];
         return $data;
       }
     }
